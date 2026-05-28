@@ -2,6 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Redis install kar rahe hain
+RUN apk add --no-cache redis
+
 COPY package*.json ./
 RUN npm ci --omit=dev
 
@@ -12,4 +15,5 @@ ENV PORT=5000
 
 EXPOSE 5000
 
-CMD ["npm", "start"]
+# Redis + Node dono start
+CMD redis-server --daemonize yes && npm start
